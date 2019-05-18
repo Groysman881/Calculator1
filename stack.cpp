@@ -22,7 +22,8 @@ void Stack::push(char *value){
     size++;
 }
 char* Stack::pop(){
-    char* buf = new char;
+    char* buf = new char[20];
+    buf[0] = '\0';
     Node* buf_node = top;
     strcat(buf,top->token);
     top = top->past;

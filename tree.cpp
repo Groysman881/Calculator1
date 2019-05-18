@@ -6,7 +6,7 @@ Tree::Tree()
     root = new tNode;
 }
 bool tNode::isNumber(){
-    if(left == NULL && right == NULL){
+    if(left == nullptr && right == nullptr){
         return true;
     }
     else{
@@ -16,9 +16,9 @@ bool tNode::isNumber(){
 tNode::tNode(){
     token = new char;
     token[0] = '\0';
-    left = NULL;
-    right = NULL;
-    parent = NULL;
+    left = nullptr;
+    right = nullptr;
+    parent = nullptr;
 }
 void Tree::set_root(tNode *node){
     root = node;

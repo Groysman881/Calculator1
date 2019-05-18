@@ -244,7 +244,7 @@ int Calculator::calculate(tNode* root){
 
     if(root->isNumber()){
         int result = toInt(root->token);
-        root = NULL;
+        root = nullptr;
         return result;
     }
     if(root->left->isNumber() && root->right->isNumber()){
@@ -253,38 +253,38 @@ int Calculator::calculate(tNode* root){
             int k = toInt(root->left->token) + toInt(root->right->token);
             sprintf(value,"%d",k);
             strcpy(root->token,value);
-            root->left = NULL;
-            root->right = NULL;
+            root->left = nullptr;
+            root->right = nullptr;
         }
         else if(strcmp(root->token,"-") == 0){
             int k = toInt(root->left->token) - toInt(root->right->token);
             sprintf(value,"%d",k);
             strcpy(root->token,value);
-            root->left = NULL;
-            root->right = NULL;
+            root->left = nullptr;
+            root->right = nullptr;
         }
         else if(strcmp(root->token,"*") == 0){
             int k = toInt(root->left->token) * toInt(root->right->token);
             sprintf(value,"%d",k);
             strcpy(root->token,value);
-            root->left = NULL;
-            root->right = NULL;
+            root->left = nullptr;
+            root->right = nullptr;
         }
         else if(strcmp(root->token,"/") == 0){
             int k = toInt(root->left->token) / toInt(root->right->token);
             sprintf(value,"%d",k);
             strcpy(root->token,value);
-            root->left = NULL;
-            root->right = NULL;
+            root->left = nullptr;
+            root->right = nullptr;
         }
         else if(strcmp(root->token,"^") == 0){     
             int k = pow(toInt(root->left->token),toInt(root->right->token));
             sprintf(value,"%d",k);
             strcpy(root->token,value);
-            root->left = NULL;
-            root->right = NULL;          
+            root->left = nullptr;
+            root->right = nullptr;
         }
-        if(root->parent == NULL){
+        if(root->parent == nullptr){
             calculate(root);
         }
         else{

@@ -15,7 +15,7 @@ void Queue::push(char *value){
 
     qNode* new_node = new qNode;
     new_node->token[0] = '\0';
-    new_node->next = NULL;
+    new_node->next = nullptr;
 
     strcat(new_node->token, value);
     if(size == 0){
@@ -31,9 +31,8 @@ void Queue::push(char *value){
 
 }
 char* Queue::pop(){
-
-
-    char* buf = new char;
+    char* buf = new char[20];
+    buf[0] = '\0';
     qNode* buf_node = head;
     if(size > 0){
         strcat(buf,head->token);
