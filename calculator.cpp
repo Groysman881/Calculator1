@@ -20,6 +20,9 @@ bool Calculator::isOperator(char *token){
     return false;
 }
 int Calculator::getPriority(char* _operator){
+    if(_operator == nullptr){
+        return 0;
+    }
     if(strcmp(_operator,"(") == 0){
         return 0;
     }
@@ -76,11 +79,14 @@ int Calculator::toInt(char *token){
     return i_token;
 }
 void Calculator::getPostfix(char *expr){
+    std::cout<<"P check"<<std::endl;
     int i = 0;
     bool prev_token = false;
     bool minus = false;
     while(expr[i] != '\0'){
-        char* op = new char;
+        std::cout<<"P check1"<<std::endl;
+        char* op = new char[5];
+        op[0] = '\0';
         sprintf(op,"%c",expr[i]);
         if(isOperator(op)){
             switch(getPriority(op)){
@@ -97,20 +103,27 @@ void Calculator::getPostfix(char *expr){
                 _stack->pop();
                 prev_token = true;
                 break;
-            case 2:            
+            case 2:
+                std::cout<<op<<std::endl;
+                std::cout<<_stack->get_size()<<std::endl;
+                std::cout<<strcmp(op,"-")<<std::endl;
                 if(strcmp(op,"-") == 0 && !prev_token){
                     _queue->push("0");
                     prev_token = true;
                     minus = true;
                 }
-                else if(getPriority(_stack->get_top()) <= 2){
+                else if((_stack->get_size()) == 0 || getPriority(_stack->get_top()) <= 2 ){
+                //else if((_stack->get_size()) == 0){
+                    std::cout<<"Eto"<<std::endl;
                     _stack->push(op);
+                    prev_token = false;
                 }
                 else{
+                    std::cout<<"Eto1"<<std::endl;
                     _queue->push(_stack->pop());
                     _stack->push(op);
+                    prev_token = false;
                 }
-                prev_token = false;
                 break;
             case 3:
                 if(_stack->get_size() == 0){
@@ -134,17 +147,20 @@ void Calculator::getPostfix(char *expr){
         }
         else if(strcmp(op," ") != 0){
             prev_token = true;
-            char* token = new char;
+            char* token = new char[20];
             token[0] = '\0';
-            char* buf = new char;
+            char* buf = new char[20];
             buf[0] = '\0';
             sprintf(buf,"%c",expr[i]);
-            while( !isOperator(buf) && strcmp(buf," ") != 0 && expr[i] != '\0'){
+            while(!isOperator(buf) && strcmp(buf," ") != 0 && expr[i] != '\0'){
+                std::cout<<"P check2"<<std::endl;
                 strcat(token,buf);
                 i++;
                 sprintf(buf,"%c",expr[i]);
             }
+            std::cout<<"rdy"<<std::endl;
             for(int i = 0;i < strlen(token);i++){
+                std::cout<<token<<std::endl;
                 if((int)token[i] < 48 || (int)token[i] > 57){
                     std::cout<<"Incorrect enter of expression!"<<std::endl;
                     exit(0);
@@ -175,6 +191,7 @@ void Calculator::getAST(){
     int root_num;
     int q_size = _queue->get_size();
     while(size < q_size){
+        std::cout<<"AST check"<<std::endl;
         if(_queue->get_size() > 0){
             if(!isOperator(_queue->get_head())){
                 stack_num->push(_queue->get_head());
@@ -241,13 +258,17 @@ void Calculator::getAST(){
 }
 
 int Calculator::calculate(tNode* root){
-
+    int _result;
+    std::cout<<"Calc check"<<std::endl;
     if(root->isNumber()){
-        int result = toInt(root->token);
+        std::cout<<"CHECK"<<std::endl;
+        _result = toInt(root->token);
         root = nullptr;
-        return result;
+        std::cout<<"CHECK1"<<std::endl;
+        return _result;
     }
     if(root->left->isNumber() && root->right->isNumber()){
+        std::cout<<"Calc check1"<<std::endl;
         char* value = new char;
         if(strcmp(root->token,"+") == 0){
             int k = toInt(root->left->token) + toInt(root->right->token);

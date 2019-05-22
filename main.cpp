@@ -13,10 +13,14 @@ int main()
     while(continiue){
         cout<<"Enter expression : ";
         char* expr = new char[50];
+        //fgets(expr,50,stdin);
         gets(expr);
+        cout<<expr<<endl;
+        cout<<strlen(expr)<<endl;
         calc.getPostfix(expr);
         calc.getAST();
-        cout<<calc.calculate(calc.get_tree_root())<<std::endl;
+        int a = calc.calculate(calc.get_tree_root());
+        cout<<a<<endl;
         cout<<"Next expression?: 1 - Yes 0 - No"<<endl;
         char* buf = new char[1];
         gets(buf);
